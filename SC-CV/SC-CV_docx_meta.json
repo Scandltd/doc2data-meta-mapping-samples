@@ -110,7 +110,7 @@
           "mapping": {
             "companyName": {
               "type": "value",
-              "query": "./following-sibling::p[1]"
+              "query": "./following-sibling::p[count(./following-sibling::p[@class='no_Spacing']) > 3]"
             },
             "companyLocation": {
               "type": "value",
@@ -138,7 +138,7 @@
             },
             "projects": {
               "type": "collection",
-              "query": "./following-sibling::h2",
+              "query": "./following-sibling::h2[following-sibling::table]",
               "mapping": {
                 "type": "object",
                 "mapping": {
