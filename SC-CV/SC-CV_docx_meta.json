@@ -186,6 +186,23 @@
           }
         }
       },
+      "otherExperience": {
+        "type": "collection",
+        "query": "./h1[contains(text(), 'Other Experience')]/following-sibling::h2",
+        "mapping": {
+          "type": "object",
+          "mapping": {
+            "name": {
+              "type": "value",
+              "query": "./text()"
+            },
+            "description": {
+              "type": "array",
+              "query": "./following-sibling::p[count(following-sibling::h2)]"
+            }
+          }
+        }
+      },
       "education": {
         "type": "array",
         "query": "./h1[contains(text(), 'Education')]/following-sibling::p[following-sibling::p[contains(text(), 'More details upon request')] and text()]"
