@@ -1,0 +1,195 @@
+{
+  "name": "SCAND CV parsing",
+  "version": "0.1",
+  "documentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+  "mapping": {
+    "type": "object",
+    "query": "//html/body",
+    "mapping": {
+      "name": {
+        "type": "value",
+        "query": "./p[@class='header_H1']/text()",
+        "postprocessing": {
+          "type": "regex",
+          "regex": "^(.+)\\s+\\(\\d+\\)$"
+        }
+      },
+      "birthYear": {
+        "type": "value",
+        "query": "./p[@class='header_H1']/text()",
+        "postprocessing": {
+          "type": "regex",
+          "regex": "^.+\\s+\\((\\d+)\\)$"
+        }
+      },
+      "targetPosition": {
+        "type": "value",
+        "query": "./p[@class='header_H2']/text()"
+      },
+      "summary": {
+        "type": "array",
+        "query": "./h1[contains(text(), 'Summary')]/following::p[count(preceding::h1) = 1]/text()"
+      },
+      "knowledgeAndSkills": {
+        "type": "object",
+        "query": "./h1[contains(text(), 'Knowledge and skills')]/following-sibling::table/tbody",
+        "mapping": {
+          "OS": {
+            "type": "array",
+            "query": "./tr/td[contains(./p/text(),'Operating systems')]/following-sibling::td/p/text()",
+            "mapping": {
+              "type": "value",
+              "postprocessing": {
+                "type": "regex",
+                "regex": "^·\\s+(.+)\\.$"
+              }
+            }
+          },
+          "langsTechsDevTools": {
+            "type": "array",
+            "query": "./tr/td[contains(./p/text(),'Programming languages, technologies and development tools')]/following-sibling::td/p/text()",
+            "mapping": {
+              "type": "value",
+              "postprocessing": {
+                "type": "regex",
+                "regex": "^·\\s+(.+)\\.$"
+              }
+            }
+          },
+          "dbs": {
+            "type": "array",
+            "query": "./tr/td[contains(./p/text(),'Databases')]/following-sibling::td/p/text()",
+            "mapping": {
+              "type": "value",
+              "postprocessing": {
+                "type": "regex",
+                "regex": "^·\\s+(.+)\\.$"
+              }
+            }
+          },
+          "managingDevFrameworks": {
+            "type": "array",
+            "query": "./tr/td[contains(./p/text(),'Managing development frameworks')]/following-sibling::td/p/text()",
+            "mapping": {
+              "type": "value",
+              "postprocessing": {
+                "type": "regex",
+                "regex": "^·\\s+(.+)\\.$"
+              }
+            }
+          },
+          "bugTrackersProjectWorkflowSystems": {
+            "type": "array",
+            "query": "./tr/td[contains(./p/text(),'Bug tracking and projects workflow systems')]/following-sibling::td/p/text()",
+            "mapping": {
+              "type": "value",
+              "postprocessing": {
+                "type": "regex",
+                "regex": "^·\\s+(.+)\\.$"
+              }
+            }
+          },
+          "other": {
+            "type": "array",
+            "query": "./tr/td[contains(./p/text(),'Other')]/following-sibling::td/p/text()",
+            "mapping": {
+              "type": "value",
+              "postprocessing": {
+                "type": "regex",
+                "regex": "^·\\s+(.+)\\.$"
+              }
+            }
+          }
+        }
+      },
+      "experience": {
+        "type": "collection",
+        "query": "./h1[text()='Experience:']",
+        "mapping": {
+          "type": "object",
+          "mapping": {
+            "companyName": {
+              "type": "value",
+              "query": "./following-sibling::p[1]"
+            },
+            "companyLocation": {
+              "type": "value",
+              "query": "./following-sibling::p[contains(text(), 'Location')]",
+              "postprocessing": {
+                "type": "regex",
+                "regex": "^Location:\\s+(.+)\\.$"
+              }
+            },
+            "postion": {
+              "type": "value",
+              "query": "./following-sibling::p[contains(text(), 'Position')]",
+              "postprocessing": {
+                "type": "regex",
+                "regex": "^Position:\\s+(.+)\\.$"
+              }
+            },
+            "duration": {
+              "type": "value",
+              "query": "./following-sibling::p[contains(text(), 'Professional experience')]",
+              "postprocessing": {
+                "type": "regex",
+                "regex": "^Professional experience:\\s+(.+)\\.$"
+              }
+            },
+            "projects": {
+              "type": "collection",
+              "query": "./following-sibling::h2",
+              "mapping": {
+                "type": "object",
+                "mapping": {
+                  "projectName": {
+                    "type": "value",
+                    "query": "./text()"
+                  },
+                  "projectDetails": {
+                    "type": "object",
+                    "query": "./following-sibling::table/tbody",
+                    "mapping": {
+                      "timeframe": {
+                        "type": "value",
+                        "query": "./tr/td[contains(./p/text(),'Timeframe')]/following-sibling::td/p/text()"
+                      },
+                      "position": {
+                        "type": "value",
+                        "query": "./tr/td[contains(./p/text(),'Position')]/following-sibling::td/p/text()"
+                      },
+                      "opSchedule": {
+                        "type": "value",
+                        "query": "./tr/td[contains(./p/text(),'Operating schedule')]/following-sibling::td/p/text()"
+                      },
+                      "os": {
+                        "type": "value",
+                        "query": "./tr/td[contains(./p/text(),'OS')]/following-sibling::td/p/text()"
+                      },
+                      "area": {
+                        "type": "value",
+                        "query": "./tr/td[contains(./p/text(),'Area')]/following-sibling::td/p/text()"
+                      },
+                      "languagesAndTools": {
+                        "type": "value",
+                        "query": "./tr/td[contains(./p/text(),'Programming Languages')]/following-sibling::td/p/text()"
+                      },
+                      "tasks": {
+                        "type": "array",
+                        "query": "./tr/td[contains(./p/text(),'Tasks')]/following-sibling::td/p"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "education": {
+        "type": "array",
+        "query": "./h1[contains(text(), 'Education')]/following-sibling::p[following-sibling::p[contains(text(), 'More details upon request')] and text()]"
+      }
+    }
+  }
+}
