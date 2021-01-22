@@ -198,7 +198,7 @@
             },
             "description": {
               "type": "array",
-              "query": "./following-sibling::p[count(following-sibling::h2)]"
+              "query": "./following::p[position() >= 1 and position() <= (count(./preceding::h2[1]/following::p) - count(./following::p)) and not(preceding::h1[contains(text(), 'Education:')]) and string-length(text()) > 0]"
             }
           }
         }
