@@ -138,13 +138,13 @@
             },
             "projects": {
               "type": "collection",
-              "query": "./following-sibling::h2[position() >= 1 and position() <= (count(./preceding-sibling::p[not(@class) and count(./following-sibling::p[@class='no_Spacing']) > 3 and string-length(text()) > 0][1]/following-sibling::h2) - count(./following-sibling::p[not(@class) and count(./following-sibling::p[@class='no_Spacing']) > 3 and string-length(text()) > 0][1]/following-sibling::h2))]",
+              "query": "./following-sibling::h2[position() >= 1 and position() <= (count(./preceding-sibling::p[not(@class) and count(./following-sibling::p[@class='no_Spacing']) > 3 and string-length(text()) > 0][1]/following-sibling::h2[not(preceding::h1[contains(text(), 'Other Experience:')])]) - count(./following-sibling::p[not(@class) and count(./following-sibling::p[@class='no_Spacing']) > 3 and string-length(text()) > 0][1]/following-sibling::h2[not(preceding::h1[contains(text(), 'Other Experience:')])]))]",
               "mapping": {
                 "type": "object",
                 "mapping": {
                   "projectName": {
                     "type": "value",
-                    "query": "./text()"
+                    "query": "./self::node()"
                   },
                   "projectDetails": {
                     "type": "object",
