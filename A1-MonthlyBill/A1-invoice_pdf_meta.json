@@ -1,0 +1,51 @@
+{
+  "name": "A1 Monthly Invoice",
+  "version": "0.1",
+  "documentType": "application/pdf",
+  "mapping": {
+    "type": "object",
+    "query": "/html",
+    "mapping": {
+      "invoiceCreated": {
+        "type": "value",
+        "query": "./head/meta[@name='meta:creation-date']/@content"
+      },
+      "invoice": {
+        "type": "object",
+        "query": "./body/div[@class='page']/p[contains(text(), 'Итого к оплате с учетом округления')]",
+        "mapping": {
+          "toPay": {
+            "type": "value",
+            "query": ".",
+            "postprocessing": {
+              "type": "regex",
+              "regex": "(\\d+.\\d+)"
+            }
+          }
+        }
+      },
+      "balanace": {
+        "type": "object",
+        "query": "./body/div[@class='page']/p[contains(text(), 'Итого к оплате с учетом округления')]/preceding-sibling::p[1]",
+        "mapping": {
+          "on": {
+            "type": "value",
+            "query": "./text()",
+            "postprocessing": {
+              "type": "regex",
+              "regex": "Баланс на (\\d\\d.\\d\\d.\\d\\d\\d\\d)"
+            }
+          },
+          "amount": {
+            "type": "value",
+            "query": "./text()",
+            "postprocessing": {
+              "type": "regex",
+              "regex": "Баланс на \\d\\d.\\d\\d.\\d\\d\\d\\d: (-?\\d+.\\d+)$"
+            }
+          }
+        }
+      }
+    }
+  }
+}
