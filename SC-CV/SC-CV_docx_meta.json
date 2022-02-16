@@ -1,6 +1,6 @@
 {
   "name": "SCAND CV parsing",
-  "version": "0.1",
+  "version": "0.1.1",
   "documentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
   "mapping": {
     "type": "object",
@@ -138,7 +138,7 @@
             },
             "projects": {
               "type": "collection",
-              "query": "./following-sibling::h2[position() >= 1 and position() <= (count(./preceding-sibling::p[not(@class) and count(./following-sibling::p[@class='no_Spacing']) > 3 and string-length(text()) > 0][1]/following-sibling::h2[not(preceding::h1[contains(text(), 'Other Experience:')])]) - count(./following-sibling::p[not(@class) and count(./following-sibling::p[@class='no_Spacing']) > 3 and string-length(text()) > 0][1]/following-sibling::h2[not(preceding::h1[contains(text(), 'Other Experience:')])]))]",
+              "query": "./following-sibling::h2[position() >= 1 and position() <= (count(./preceding-sibling::p[not(@class) and count(./following-sibling::p[@class='no_Spacing']) > 3 and string-length(text()) > 0][1]/following-sibling::h2[not(preceding::h1[contains(text(), 'Other Experience:')])]) - count(./following-sibling::p[1]/following-sibling::h2[not(preceding::h1[contains(text(), 'Other Experience:')])]))]",
               "mapping": {
                 "type": "object",
                 "mapping": {
