@@ -1,6 +1,6 @@
 {
   "name": "SCAND CV parsing",
-  "version": "0.1.1",
+  "version": "0.1",
   "documentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
   "mapping": {
     "type": "object",
