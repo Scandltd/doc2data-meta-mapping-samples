@@ -144,7 +144,11 @@
                 "mapping": {
                   "projectName": {
                     "type": "value",
-                    "query": "./self::node()"
+                    "query": "./self::node()",
+                    "postprocessing": {
+                      "type": "regex",
+                      "regex": "^Project: (.+)$"
+                    }
                   },
                   "projectDetails": {
                     "type": "object",
