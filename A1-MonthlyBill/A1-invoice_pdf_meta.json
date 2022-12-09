@@ -8,7 +8,7 @@
     "mapping": {
       "invoiceCreated": {
         "type": "value",
-        "query": "./head/meta[@name='meta:creation-date']/@content"
+        "query": "./head/meta[@name='dcterms:created']/@content"
       },
       "invoice": {
         "type": "object",
