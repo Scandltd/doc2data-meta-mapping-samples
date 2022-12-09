@@ -26,7 +26,7 @@
       },
       "balanace": {
         "type": "object",
-        "query": "./body/div[@class='page']/p[contains(text(), 'Итого к оплате с учетом округления')]/preceding-sibling::p[1]",
+        "query": "./body/div[@class='page']/p[contains(text(), 'Баланс на')][2]",
         "mapping": {
           "on": {
             "type": "value",
