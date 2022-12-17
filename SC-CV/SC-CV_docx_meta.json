@@ -103,7 +103,7 @@
         }
       },
       "experience": {
-        "type": "collection",
+        "type": "array",
         "query": "./h1[text()='Experience:']/following-sibling::p[not(@class) and count(./following-sibling::p[@class='no_Spacing']) > 3 and string-length(text()) > 0]",
         "mapping": {
           "type": "object",
@@ -137,7 +137,7 @@
               }
             },
             "projects": {
-              "type": "collection",
+              "type": "array",
               "query": "./following-sibling::h2[position() >= 1 and position() <= (count(./preceding-sibling::p[not(@class) and count(./following-sibling::p[@class='no_Spacing']) > 3 and string-length(text()) > 0][1]/following-sibling::h2[not(preceding::h1[contains(text(), 'Other Experience:')])]) - count(./following-sibling::p[1]/following-sibling::h2[not(preceding::h1[contains(text(), 'Other Experience:')])]))]",
               "mapping": {
                 "type": "object",
@@ -191,7 +191,7 @@
         }
       },
       "otherExperience": {
-        "type": "collection",
+        "type": "array",
         "query": "./h1[contains(text(), 'Other Experience')]/following-sibling::h2",
         "mapping": {
           "type": "object",
