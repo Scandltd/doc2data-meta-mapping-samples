@@ -120,7 +120,7 @@
                 "regex": "^Location:\\s+(.+)\\.$"
               }
             },
-            "postion": {
+            "position": {
               "type": "value",
               "query": "./following-sibling::p[contains(text(), 'Position')]",
               "postprocessing": {
