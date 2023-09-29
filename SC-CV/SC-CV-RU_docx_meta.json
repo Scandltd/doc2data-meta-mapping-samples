@@ -1,0 +1,216 @@
+{
+  "name": "SCAND CV parsing",
+  "version": "0.1",
+  "documentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+  "mapping": {
+    "type": "object",
+    "query": "//html/body",
+    "mapping": {
+      "name": {
+        "type": "value",
+        "query": "./p[@class='header_H1']/text()",
+        "postprocessing": {
+          "type": "regex",
+          "regex": "^(.+)\\s+\\(\\d+\\)$"
+        }
+      },
+      "birthYear": {
+        "type": "value",
+        "query": "./p[@class='header_H1']/text()",
+        "postprocessing": {
+          "type": "regex",
+          "regex": "^.+\\s+\\((\\d+)\\)$"
+        }
+      },
+      "targetPosition": {
+        "type": "value",
+        "query": "./p[@class='header_H2']/text()"
+      },
+      "summary": {
+        "type": "array",
+        "query": "./h1[contains(text(), 'Обзорная информация')]/following::p[count(preceding::h1) = 1]/text()"
+      },
+      "knowledgeAndSkills": {
+        "type": "object",
+        "query": "./h1[contains(text(), 'Знания и навыки')]/following-sibling::table/tbody",
+        "mapping": {
+          "OS": {
+            "type": "array",
+            "query": "./tr/td[contains(./p/text(),'Операционные системы')]/following-sibling::td/p/text()",
+            "mapping": {
+              "type": "value",
+              "postprocessing": {
+                "type": "regex",
+                "regex": "^·\\s+(.+)\\.$"
+              }
+            }
+          },
+          "langsTechsDevTools": {
+            "type": "array",
+            "query": "./tr/td[contains(./p/text(),'Языки программирования, технологии и средства разработки')]/following-sibling::td/p/text()",
+            "mapping": {
+              "type": "value",
+              "postprocessing": {
+                "type": "regex",
+                "regex": "^·\\s+(.+)\\.$"
+              }
+            }
+          },
+          "dbs": {
+            "type": "array",
+            "query": "./tr/td[contains(./p/text(),'Базы данных')]/following-sibling::td/p/text()",
+            "mapping": {
+              "type": "value",
+              "postprocessing": {
+                "type": "regex",
+                "regex": "^·\\s+(.+)\\.$"
+              }
+            }
+          },
+          "managingDevFrameworks": {
+            "type": "array",
+            "query": "./tr/td[contains(./p/text(),'Фреймворки управления разработкой')]/following-sibling::td/p/text()",
+            "mapping": {
+              "type": "value",
+              "postprocessing": {
+                "type": "regex",
+                "regex": "^·\\s+(.+)\\.$"
+              }
+            }
+          },
+          "bugTrackersProjectWorkflowSystems": {
+            "type": "array",
+            "query": "./tr/td[contains(./p/text(),'Системы управления проектами и задачами')]/following-sibling::td/p/text()",
+            "mapping": {
+              "type": "value",
+              "postprocessing": {
+                "type": "regex",
+                "regex": "^·\\s+(.+)\\.$"
+              }
+            }
+          },
+          "other": {
+            "type": "array",
+            "query": "./tr/td[contains(./p/text(),'Другое')]/following-sibling::td/p/text()",
+            "mapping": {
+              "type": "value",
+              "postprocessing": {
+                "type": "regex",
+                "regex": "^·\\s+(.+)\\.$"
+              }
+            }
+          }
+        }
+      },
+      "experience": {
+        "type": "array",
+        "query": "./h1[text()='Опыт:']/following-sibling::p[not(@class) and count(./following-sibling::p[@class='no_Spacing']) > 3 and string-length(text()) > 0]",
+        "mapping": {
+          "type": "object",
+          "mapping": {
+            "companyName": {
+              "type": "value",
+              "query": "./self::node()"
+            },
+            "companyLocation": {
+              "type": "value",
+              "query": "./following-sibling::p[contains(text(), 'Местонахождение')]",
+              "postprocessing": {
+                "type": "regex",
+                "regex": "^Местонахождение:\\s+(.+)\\.$"
+              }
+            },
+            "position": {
+              "type": "value",
+              "query": "./following-sibling::p[contains(text(), 'Должность')]",
+              "postprocessing": {
+                "type": "regex",
+                "regex": "^Должность:\\s+(.+)\\.$"
+              }
+            },
+            "duration": {
+              "type": "value",
+              "query": "./following-sibling::p[contains(text(), 'Период')]",
+              "postprocessing": {
+                "type": "regex",
+                "regex": "^Период:\\s+(.+)\\.$"
+              }
+            },
+            "projects": {
+              "type": "array",
+              "query": "./following-sibling::h2[position() >= 1 and position() <= (count(./preceding-sibling::p[not(@class) and count(./following-sibling::p[@class='no_Spacing']) > 3 and string-length(text()) > 0][1]/following-sibling::h2[not(preceding::h1[contains(text(), 'Другой опыт:')])]) - count(./following-sibling::p[1]/following-sibling::h2[not(preceding::h1[contains(text(), 'Другой опыт:')])]))]",
+              "mapping": {
+                "type": "object",
+                "mapping": {
+                  "projectName": {
+                    "type": "value",
+                    "query": "./self::node()",
+                    "postprocessing": {
+                      "type": "regex",
+                      "regex": "^Проект: (.+)$"
+                    }
+                  },
+                  "projectDetails": {
+                    "type": "object",
+                    "query": "./following-sibling::table/tbody",
+                    "mapping": {
+                      "timeframe": {
+                        "type": "value",
+                        "query": "./tr/td[contains(./p/text(),'Время работы')]/following-sibling::td/p/text()"
+                      },
+                      "position": {
+                        "type": "value",
+                        "query": "./tr/td[contains(./p/text(),'Должность')]/following-sibling::td/p/text()"
+                      },
+                      "opSchedule": {
+                        "type": "value",
+                        "query": "./tr/td[contains(./p/text(),'Занятость')]/following-sibling::td/p/text()"
+                      },
+                      "os": {
+                        "type": "value",
+                        "query": "./tr/td[contains(./p/text(),'ОС')]/following-sibling::td/p/text()"
+                      },
+                      "area": {
+                        "type": "value",
+                        "query": "./tr/td[contains(./p/text(),'Предметная область')]/following-sibling::td/p/text()"
+                      },
+                      "languagesAndTools": {
+                        "type": "value",
+                        "query": "./tr/td[contains(./p/text(),'Языки программирования и средства разработки ПО')]/following-sibling::td/p/text()"
+                      },
+                      "tasks": {
+                        "type": "array",
+                        "query": "./tr/td[contains(./p/text(),'Задачи')]/following-sibling::td/p"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "otherExperience": {
+        "type": "array",
+        "query": "./h1[contains(text(), 'Другой опыт')]/following-sibling::h2",
+        "mapping": {
+          "type": "object",
+          "mapping": {
+            "name": {
+              "type": "value",
+              "query": "./text()"
+            },
+            "description": {
+              "type": "array",
+              "query": "./following::p[position() >= 1 and position() <= (count(./preceding::h2[1]/following::p) - count(./following::p)) and not(preceding::h1[contains(text(), 'Образование:')]) and string-length(text()) > 0]"
+            }
+          }
+        }
+      },
+      "education": {
+        "type": "array",
+        "query": "./h1[contains(text(), 'Образование')]/following-sibling::p[following-sibling::p[contains(text(), 'Более подробная информация может быть предоставлена по отдельному запросу')] and text()]"
+      }
+    }
+  }
+}
