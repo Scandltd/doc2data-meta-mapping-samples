@@ -117,6 +117,14 @@
               "query": "./following-sibling::p[contains(text(), 'Location')]",
               "postprocessing": {
                 "type": "regex",
+                "regex": "^Location:\\s+(?!Minsk, Belarus)(.+)\\.$"
+              }
+            },
+            "companyLocationUnfiltered": {
+              "type": "value",
+              "query": "./following-sibling::p[contains(text(), 'Location')]",
+              "postprocessing": {
+                "type": "regex",
                 "regex": "^Location:\\s+(.+)\\.$"
               }
             },
