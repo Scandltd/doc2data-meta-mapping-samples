@@ -1,5 +1,5 @@
 {
-  "name": "SCAND CV parsing",
+  "name": "SCAND CV parsing (2024-03-20+)",
   "version": "0.1",
   "documentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
   "mapping": {
@@ -114,7 +114,7 @@
             },
             "companyLocation": {
               "type": "value",
-              "query": "./following-sibling::p[contains(text(), 'Location')]",
+              "query": "./following-sibling::p[1]",
               "postprocessing": {
                 "type": "regex",
                 "regex": "^Location:\\s+(?!Minsk, Belarus)(.+)\\.$"
@@ -122,7 +122,7 @@
             },
             "companyLocationUnfiltered": {
               "type": "value",
-              "query": "./following-sibling::p[contains(text(), 'Location')]",
+              "query": "./following-sibling::p[1]",
               "postprocessing": {
                 "type": "regex",
                 "regex": "^Location:\\s+(.+)\\.$"
@@ -130,7 +130,7 @@
             },
             "position": {
               "type": "value",
-              "query": "./following-sibling::p[contains(text(), 'Position')]",
+              "query": "./following-sibling::p[2]",
               "postprocessing": {
                 "type": "regex",
                 "regex": "^Position:\\s+(.+)\\.$"
@@ -138,7 +138,7 @@
             },
             "duration": {
               "type": "value",
-              "query": "./following-sibling::p[contains(text(), 'Professional experience')]",
+              "query": "./following-sibling::p[3]",
               "postprocessing": {
                 "type": "regex",
                 "regex": "^Professional experience:\\s+(.+)\\.$"
